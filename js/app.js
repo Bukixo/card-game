@@ -1,12 +1,14 @@
 $(() => {
 
   const $demo = $('#demo');
+  const $win = $('#win');
+  // const playerHand = [];
 
 ///CREATE A DECK////
   const deck = [];
   const values = {'A': 1,'J': 11, 'Q': 12, 'K': 13 };
 
-  ['H','S','C','D'].forEach((suit) => {
+  ['D','S','C','H'].forEach((suit) => {
     ['A',2,3,4,5,6,7,8,9,10,'J','Q','K'].forEach((face) => {
       deck.push({
         suit,
@@ -16,6 +18,9 @@ $(() => {
     });
   });
 
+  console.log(deck);
+// Teatr White White 023 White flower
+//Hearts, Spades, Diamonds, Clubs
   ////////SHUFFLE DECK////
 
   function shuffle(array){
@@ -37,26 +42,20 @@ $(() => {
   $('.submit').on('click', deal);
 
   function deal(){
-    //const hands = [];
     const players = $('#numOfplayers').val();
     const numOfCards = $('#numOfCards').val();
     console.log('these are the number of players',players);
     console.log('these are the number of cards',numOfCards);
-    if (numOfCards * players < 52) {
+    if (numOfCards * players <= 52) {
       for ( let i = 0; i < players; ++i) {
         const playerHand = [];
         for (let i = 0; i < numOfCards; i++) {
           const card = deck.shift();
           playerHand.push(card);
-          // const eachPlayer = JSON.stringify(playerHand);
-          // console.log('this is the playerHands array',playerHand);
-          // //console.log('these are the hands of each player stringified (eachplayer)', eachPlayer);
-          // $demo.append(eachPlayer, '<br/>');
         }
         hands.push(playerHand);
-
+        displayHands(playerHand);
       }
-      displayHands();
       findWinner();
       console.log( 'these are the hands inide the deal function', hands);
     } else {
@@ -68,13 +67,12 @@ $(() => {
     }
   }
 
-  function displayHands() {
-    for (let i = 0; i < hands; i++) {
-      const eachPlayer = JSON.stringify(playerHand);
-      console.log('this is the playerHands array',playerHand);
-      //console.log('these are the hands of each player stringified (eachplayer)', eachPlayer);
-      $demo.append(eachPlayer, '<br/>');
-    }
+  function displayHands(array) {
+    // for (let i = 0; i < hands; i++) {
+    const eachPlayer = JSON.stringify(array);
+    console.log('this is the playerHands array',array);
+    return $demo.append(eachPlayer, '<br/>');
+    //}
   }
 
 /////////////////function to find th winner //////////////////
@@ -89,8 +87,9 @@ $(() => {
     const winningValue = totals.reduce((a, b) => Math.max(a,b));
     const winningIndex = totals.indexOf(winningValue);
     console.log('the winning number', winningValue);
-    const winner = `Player ${winningIndex + 1} won`;
+    const winner = `Player ${winningIndex + 1} won with ${winningValue} points`;
     console.log(winner);
+    return $win.append(winner);
   }
 
 
