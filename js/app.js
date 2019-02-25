@@ -21,7 +21,7 @@ $(() => {
     });
   });
 
-  ////////SHUFFLE DECK//////////////////
+////////SHUFFLE DECK//////////////////
 
   function shuffle(array){
     var i = 0
